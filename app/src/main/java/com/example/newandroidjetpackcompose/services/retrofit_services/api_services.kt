@@ -1,36 +1,20 @@
 package com.example.newandroidjetpackcompose.services.retrofit_services
 
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
-    @GET("{endpoint}")
-    suspend fun getRequest(
-        @Path("endpoint") endpoint: String,
-        @QueryMap params: Map<String, String>? = null
-    ): Response<Map<String, Any>>
+    @GET
+    suspend fun get(@Url url: String, @QueryMap params: Map<String, String>): retrofit2.Response<ResponseBody>
 
-    @POST("{endpoint}")
-    suspend fun postRequest(
-        @Path("endpoint") endpoint: String,
-        @Body body: Any? = null
-    ): Response<Map<String, Any>>
+    @POST
+    suspend fun post(@Url url: String, @Body body: RequestBody?): retrofit2.Response<ResponseBody>
 
-    @PUT("{endpoint}")
-    suspend fun putRequest(
-        @Path("endpoint") endpoint: String,
-        @Body body: Any? = null
-    ): Response<Map<String, Any>>
+    @PUT
+    suspend fun put(@Url url: String, @Body body: RequestBody?): retrofit2.Response<ResponseBody>
 
-    @DELETE("{endpoint}")
-    suspend fun deleteRequest(
-        @Path("endpoint") endpoint: String,
-        @QueryMap params: Map<String, String>? = null
-    ): Response<Map<String, Any>>
-
-    @PATCH("{endpoint}")
-    suspend fun patchRequest(
-        @Path("endpoint") endpoint: String,
-        @Body body: Any? = null
-    ): Response<Map<String, Any>>
+    @DELETE
+    suspend fun delete(@Url url: String): retrofit2.Response<ResponseBody>
 }
