@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.newandroidjetpackcompose"
+    namespace = "com.newAndroid.newandroidjetpackcompose"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.newandroidjetpackcompose"
+        applicationId = "com.newAndroid.newandroidjetpackcompose"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
