@@ -1,40 +1,39 @@
 package com.example.newandroidjetpackcompose
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.newandroidjetpackcompose.navigation.AppNavigator
+import com.example.newandroidjetpackcompose.navigation.RootNavGraph
 import com.example.newandroidjetpackcompose.ui.theme.NewAndroidJetpackComposeTheme
-import com.example.newandroidjetpackcompose.views.page_one.PageOneScreen
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var appNavigator: AppNavigator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Log whether appNavigator is injected properly
+        if (::appNavigator.isInitialized) {
+            Log.d("MainActivity", "AppNavigator has been injected.")
+        } else {
+            Log.e("MainActivity", "AppNavigator injection failed.")
+        }
+
         setContent {
             NewAndroidJetpackComposeTheme {
-                PageOneScreen()
+                val navController = rememberNavController()
+                appNavigator.setNavController(navController)
+                RootNavGraph(navController = navController)
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NewAndroidJetpackComposeTheme {
-        Greeting("Android")
     }
 }
