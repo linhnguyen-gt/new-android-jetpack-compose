@@ -27,13 +27,11 @@ class MainActivity : ComponentActivity() {
 
         RetrofitClient.initialize(sessionManager, appNavigator)
 
-
         setContent {
             NewAndroidJetpackComposeTheme {
                 val navController = rememberNavController()
                 appNavigator.initialize(navController)
                 RootNavGraph(navController)
-
             }
         }
     }

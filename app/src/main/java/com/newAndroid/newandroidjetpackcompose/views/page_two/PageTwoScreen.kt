@@ -29,40 +29,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.newAndroid.newandroidjetpackcompose.apis.ResponseData
 import com.newAndroid.newandroidjetpackcompose.models.ResponseDataModel
-import com.newAndroid.newandroidjetpackcompose.navigation.AppNavigator
-import com.newAndroid.newandroidjetpackcompose.view_model_factory.ResponseViewModelFactory
-import com.newAndroid.newandroidjetpackcompose.view_models.ResponseViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import com.newAndroid.newandroidjetpackcompose.view_models.PageTwoViewModel
 
-@HiltViewModel
-class PageTwoViewModel @Inject constructor(
-    private val appNavigator: AppNavigator
-) : ViewModel() {
-    fun navigateBack() {
-        appNavigator.pop()
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PageTwoScreen(
     pageTwoViewModel: PageTwoViewModel = hiltViewModel(),
-    responseViewModel: ResponseViewModel = viewModel(
-        factory = ResponseViewModelFactory(ResponseData())
-    )
 ) {
-
-
-    val data by responseViewModel.data.collectAsState()
-    val error by responseViewModel.error.collectAsState()
+    val data by pageTwoViewModel.data.collectAsState()
+    val error by pageTwoViewModel.error.collectAsState()
 
     LaunchedEffect(Unit) {
-        responseViewModel.fetchData()
+        pageTwoViewModel.fetchData()
     }
 
     Scaffold(

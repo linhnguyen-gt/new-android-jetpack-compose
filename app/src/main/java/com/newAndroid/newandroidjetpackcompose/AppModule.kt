@@ -33,4 +33,6 @@ object AppModule {
     ): SessionManager {
         return SessionManager(sharedPreferences)
     }
+
+
 }
