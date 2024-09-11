@@ -15,6 +15,15 @@ class AppNavigator @Inject constructor() {
 
     fun push(route: String) {
         if (::navController.isInitialized) {
+            navController.navigate(route)
+        } else {
+            // Handle uninitialized case - you can log an error, throw an exception, etc.
+            throw IllegalStateException("NavController has not been initialized.")
+        }
+    }
+
+    fun replace(route: String) {
+        if (::navController.isInitialized) {
             navController.navigate(route) {
                 popUpTo(navController.graph.startDestinationId) { inclusive = true }
             }

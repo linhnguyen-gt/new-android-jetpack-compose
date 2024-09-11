@@ -10,9 +10,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -24,41 +28,65 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.newAndroid.newandroidjetpackcompose.apis.ResponseData
 import com.newAndroid.newandroidjetpackcompose.models.ResponseDataModel
+import com.newAndroid.newandroidjetpackcompose.navigation.AppNavigator
 import com.newAndroid.newandroidjetpackcompose.view_model_factory.ResponseViewModelFactory
 import com.newAndroid.newandroidjetpackcompose.view_models.ResponseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+
+@HiltViewModel
+class PageTwoViewModel @Inject constructor(
+    private val appNavigator: AppNavigator
+) : ViewModel() {
+    fun navigateBack() {
+        appNavigator.pop()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PageTwoScreen() {
-    val responseData = ResponseData()
-    val viewModel: ResponseViewModel = viewModel(
-        factory = ResponseViewModelFactory(responseData)
+fun PageTwoScreen(
+    pageTwoViewModel: PageTwoViewModel = hiltViewModel(),
+    responseViewModel: ResponseViewModel = viewModel(
+        factory = ResponseViewModelFactory(ResponseData())
     )
+) {
 
-    val data by viewModel.data.collectAsState()
-    val error by viewModel.error.collectAsState()
+
+    val data by responseViewModel.data.collectAsState()
+    val error by responseViewModel.error.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.fetchData()
+        responseViewModel.fetchData()
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Page One") }
+                title = { Text("Page Two") },
+                navigationIcon = {
+                    IconButton(onClick = { pageTwoViewModel.navigateBack() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                }
             )
         }
-    ) { paddingValues ->
+    ) { innerPadding ->
         when {
             error != null -> {
                 ErrorMessage(error!!)
             }
 
             data?.data != null -> {
-                StateList(data?.data!!, paddingValues)
+                StateList(data?.data!!, innerPadding)
             }
 
             else -> {
