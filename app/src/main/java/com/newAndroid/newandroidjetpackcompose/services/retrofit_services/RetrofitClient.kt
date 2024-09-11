@@ -1,6 +1,7 @@
 package com.newAndroid.newandroidjetpackcompose.services.retrofit_services
 
 import android.util.Log
+import com.google.gson.Gson
 import com.newAndroid.newandroidjetpackcompose.navigation.AppNavigator
 import okhttp3.Authenticator
 import okhttp3.Interceptor
@@ -19,20 +20,23 @@ object RetrofitClient {
     private const val BASE_URL = "https://datausa.io/api/"
     private const val TAG = "RetrofitClient"
 
-    private val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(authInterceptor()) // Adds Authorization header with current token
-        .addInterceptor(loggingInterceptor()) // Logs request and response data
-        .authenticator(tokenAuthenticator()) // Token auto-refresh on 401 Unauthorized
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
-        .build()
+    private lateinit var sessionManager: SessionManager
+    private lateinit var appNavigator: AppNavigator
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    fun initialize(sessionManager: SessionManager, appNavigator: AppNavigator) {
+        this.sessionManager = sessionManager
+        this.appNavigator = appNavigator
+    }
+
+    private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(authInterceptor())
+        .addInterceptor(loggingInterceptor())
+        .authenticator(tokenAuthenticator())
+        .connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS).build()
+
+    private val retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create()).build()
 
     private val apiService: ApiService = retrofit.create(ApiService::class.java)
 
@@ -41,71 +45,43 @@ object RetrofitClient {
      */
     private fun authInterceptor() = Interceptor { chain ->
         val originalRequest = chain.request()
-        val token = getToken()
-        val newRequest = originalRequest.newBuilder()
-            .header("Authorization", "Bearer $token")
-            .build()
+        val token = sessionManager.getToken()
+        val newRequest =
+            originalRequest.newBuilder().header("Authorization", "Bearer $token").build()
         chain.proceed(newRequest)
     }
 
-//    class TokenAuthenticator @Inject constructor(
-//        private val appNavigator: AppNavigator // Inject AppNavigator to handle navigation
-//    ) : Authenticator {
-//        override fun authenticate(route: Route?, response: Response): Request? {
-//            // Check if the response code is 401 (Unauthorized)
-//            if (response.code == 401) {
-//                synchronized(this) {
-//                    // Parse response body to check if message == "Unauthorized"
-//                    val responseBody = response.body?.string()
-//                    val isUnauthorizedMessage = responseBody?.let {
-//                        // Parse the JSON response body to check for the 'message' field
-//                        val json = Gson().fromJson(it, Map::class.java)
-//                        (json["message"] as? String) == "Unauthorized"
-//                    } ?: false
-//
-//                    if (isUnauthorizedMessage) {
-//                        // Navigate back to the login screen and clear backstack
-//                        appNavigator.navigateToLogin()
-//
-//                        // Optionally, you can return null here, or handle a retry with a new token
-//                        return null
-//                    }
-//                }
-//            }
-//            return null
-//        }
-//
-//        // Optionally, you can add a refreshToken() method if needed to refresh the token
-//        private fun refreshToken(): String? {
-//            // Logic to refresh the token
-//            return null
-//        }
-//    }
 
     /**
      * Authenticator for handling 401 Unauthorized errors and refreshing tokens.
      */
-    private fun tokenAuthenticator(appNavigator: AppNavigator) = object : Authenticator {
+    private fun tokenAuthenticator() = object : Authenticator {
         override fun authenticate(route: Route?, response: Response): Request? {
             // Check if we have already tried to authenticate
-            if (response.priorResponse != null && response.priorResponse!!.code == 401) {
-                return null // Prevents infinite loop of refreshing
-            }
+            if (response.code == 401) {
+                // Synchronized block to prevent multiple refresh attempts
+                synchronized(this) {
+                    val responseBody = response.body.string()
 
-            // Synchronized block to prevent multiple refresh attempts
-            synchronized(this) {
-                val newToken = refreshToken()
+                    val isUnauthorizedMessage = responseBody.let {
+                        // Parse the JSON response body to check for the 'message' field
+                        val json = Gson().fromJson(it, Map::class.java)
+                        (json["message"] as? String) == "Unauthorized"
+                    }
 
-                return if (newToken != null) {
-                    Log.d(TAG, "Token refreshed successfully")
-                    response.request.newBuilder()
-                        .header("Authorization", "Bearer $newToken")
-                        .build()
-                } else {
-                    Log.e(TAG, "Failed to refresh token")
-                    null // Refresh failed, return null to prevent retries
+                    if (isUnauthorizedMessage) {
+                        // Navigate back to the login screen and clear backstack
+                        sessionManager.clearSession()
+                        appNavigator.navigateToLogin()
+
+                        return null
+                    }
                 }
+
+
             }
+            return null
+
         }
     }
 
@@ -126,24 +102,18 @@ object RetrofitClient {
         response
     }
 
-    /**
-     * Retrieves the current token from storage (SharedPreferences, database, etc.)
-     */
-    private fun getToken(): String {
-        // Implement token retrieval logic (e.g., from SharedPreferences)
-        return "your_token_here"
-    }
 
     /**
      * Refreshes the authentication token by making a network request.
      */
     private fun refreshToken(): String? {
         return try {
-//            val response = apiService.refreshToken().execute() // Synchronous token refresh call
+            // handle token here!!
+//            val response = apiService.refreshToken().execute() // Refresh token synchronously
 //            if (response.isSuccessful) {
 //                val newToken = response.body()?.token
 //                if (newToken != null) {
-//                    saveToken(newToken)
+//                    sessionManager.saveToken(newToken) // Save new token
 //                    return newToken
 //                }
 //            }
@@ -154,12 +124,6 @@ object RetrofitClient {
         }
     }
 
-    /**
-     * Saves the new token to storage (e.g., SharedPreferences)
-     */
-    private fun saveToken(token: String) {
-        // Implement logic to save the new token in SharedPreferences or database
-    }
 
     /**
      * Request method for performing network calls

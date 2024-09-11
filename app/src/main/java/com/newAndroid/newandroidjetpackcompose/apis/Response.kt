@@ -21,9 +21,24 @@ class ResponseData {
             ApiProblem.handleApiError(response)
         }
 
+        val dataMap: Map<String, Any> = when (val data = response.data["data"]) {
+//            is Map<*, *> -> {
+//                data.entries
+//                    .filter { it.key is String }
+//                    .associate { it.key as String to it.value as Any } // Safe cast after filtering
+//            }
+            is List<*> -> {
+                mapOf("data" to data)
+            }
+
+            else -> {
+                emptyMap()
+            }
+        }
+
         return BaseResponse(
             ok = true,
-            data = ResponseDataModel.parseResponse(response.data),
+            data = ResponseDataModel.getFromJsonList(dataMap)
         )
 
     }

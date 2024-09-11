@@ -1,9 +1,13 @@
 package com.newAndroid.newandroidjetpackcompose
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.newAndroid.newandroidjetpackcompose.navigation.AppNavigator
+import com.newAndroid.newandroidjetpackcompose.services.retrofit_services.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -14,5 +18,19 @@ object AppModule {
     @Singleton
     fun provideAppNavigator(): AppNavigator {
         return AppNavigator()
+    }
+
+    @Provides
+    fun provideSharedPreferences(
+        @ApplicationContext context: Context
+    ): SharedPreferences {
+        return context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    fun provideSessionManager(
+        sharedPreferences: SharedPreferences
+    ): SessionManager {
+        return SessionManager(sharedPreferences)
     }
 }

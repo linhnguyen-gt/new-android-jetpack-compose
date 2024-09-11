@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class AppNavigator @Inject constructor() {
     private lateinit var navController: NavController
 
-    fun setNavController(navController: NavController) {
+    fun initialize(navController: NavController) {
         this.navController = navController
     }
 
@@ -39,6 +39,16 @@ class AppNavigator @Inject constructor() {
         } else {
             // Handle uninitialized case
             throw IllegalStateException("NavController has not been initialized.")
+        }
+    }
+
+    fun navigateToLogin() {
+        if (::navController.isInitialized) {
+            navController.navigate("login") {
+                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+            }
+        } else {
+            throw IllegalStateException("NavController is not initialized.")
         }
     }
 }
