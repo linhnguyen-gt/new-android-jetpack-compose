@@ -65,8 +65,8 @@ fun PageTwoScreen(
                 ErrorMessage(error!!)
             }
 
-            data?.data != null -> {
-                StateList(data?.data!!, innerPadding)
+            data != null -> {
+                StateList(data!!, innerPadding)
             }
 
             else -> {

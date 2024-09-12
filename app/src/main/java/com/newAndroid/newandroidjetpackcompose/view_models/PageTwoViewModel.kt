@@ -6,7 +6,6 @@ import com.newAndroid.newandroidjetpackcompose.apis.ResponseData
 import com.newAndroid.newandroidjetpackcompose.interfaces.PageTwoInterface
 import com.newAndroid.newandroidjetpackcompose.models.ResponseDataModel
 import com.newAndroid.newandroidjetpackcompose.navigation.AppNavigator
-import com.newAndroid.newandroidjetpackcompose.services.retrofit_services.BaseResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,8 +19,8 @@ class PageTwoViewModel @Inject constructor(
 ) : ViewModel(), PageTwoInterface {
     private val responseData: ResponseData = ResponseData()
 
-    private val _data = MutableStateFlow<BaseResponse<List<ResponseDataModel>?>?>(null)
-    override val data: StateFlow<BaseResponse<List<ResponseDataModel>?>?> = _data.asStateFlow()
+    private val _data = MutableStateFlow<List<ResponseDataModel>?>(null)
+    override val data: StateFlow<List<ResponseDataModel>?> = _data.asStateFlow()
 
     private val _error = MutableStateFlow<String?>(null)
     override val error: StateFlow<String?> = _error.asStateFlow()
@@ -35,7 +34,8 @@ class PageTwoViewModel @Inject constructor(
     fun fetchData() {
         viewModelScope.launch {
             try {
-                _data.value = responseData.responseApi()
+                val response = responseData.responseApi()
+                _data.value = response.data
             } catch (e: Exception) {
                 _error.value = e.message
             }
