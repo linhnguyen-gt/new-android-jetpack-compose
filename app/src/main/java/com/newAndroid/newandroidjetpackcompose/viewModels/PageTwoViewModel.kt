@@ -1,4 +1,4 @@
-package com.newAndroid.newandroidjetpackcompose.view_models
+package com.newAndroid.newandroidjetpackcompose.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

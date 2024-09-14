@@ -1,4 +1,4 @@
-package com.newAndroid.newandroidjetpackcompose.views.page_two
+package com.newAndroid.newandroidjetpackcompose.views.pageTwo
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,7 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.newAndroid.newandroidjetpackcompose.models.ResponseDataModel
-import com.newAndroid.newandroidjetpackcompose.view_models.PageTwoViewModel
+import com.newAndroid.newandroidjetpackcompose.viewModels.PageTwoViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)

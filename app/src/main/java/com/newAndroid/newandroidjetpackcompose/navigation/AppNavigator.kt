@@ -16,9 +16,6 @@ class AppNavigator @Inject constructor() {
     fun push(route: String) {
         if (::navController.isInitialized) {
             navController.navigate(route)
-        } else {
-            // Handle uninitialized case - you can log an error, throw an exception, etc.
-            throw IllegalStateException("NavController has not been initialized.")
         }
     }
 
@@ -27,18 +24,12 @@ class AppNavigator @Inject constructor() {
             navController.navigate(route) {
                 popUpTo(navController.graph.startDestinationId) { inclusive = true }
             }
-        } else {
-            // Handle uninitialized case - you can log an error, throw an exception, etc.
-            throw IllegalStateException("NavController has not been initialized.")
         }
     }
 
-    fun pop(): Boolean {
-        return if (::navController.isInitialized) {
+    fun pop() {
+        if (::navController.isInitialized) {
             navController.popBackStack()
-        } else {
-            // Handle uninitialized case
-            throw IllegalStateException("NavController has not been initialized.")
         }
     }
 
@@ -47,8 +38,6 @@ class AppNavigator @Inject constructor() {
             navController.navigate("login") {
                 popUpTo(navController.graph.startDestinationId) { inclusive = true }
             }
-        } else {
-            throw IllegalStateException("NavController is not initialized.")
         }
     }
 }

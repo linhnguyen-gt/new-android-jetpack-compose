@@ -1,4 +1,4 @@
-package com.newAndroid.newandroidjetpackcompose.services.retrofit_services
+package com.newAndroid.newandroidjetpackcompose.services.retrofitServices
 
 import android.content.SharedPreferences
 import javax.inject.Inject

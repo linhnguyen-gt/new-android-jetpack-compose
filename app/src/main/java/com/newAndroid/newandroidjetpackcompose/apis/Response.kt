@@ -1,10 +1,10 @@
 package com.newAndroid.newandroidjetpackcompose.apis
 
 import com.newAndroid.newandroidjetpackcompose.models.ResponseDataModel
-import com.newAndroid.newandroidjetpackcompose.services.retrofit_services.ApiProblem
-import com.newAndroid.newandroidjetpackcompose.services.retrofit_services.BaseResponse
-import com.newAndroid.newandroidjetpackcompose.services.retrofit_services.RetrofitClient
-import com.newAndroid.newandroidjetpackcompose.services.retrofit_services.RetrofitClientConfig
+import com.newAndroid.newandroidjetpackcompose.services.retrofitServices.ApiProblem
+import com.newAndroid.newandroidjetpackcompose.services.retrofitServices.BaseResponse
+import com.newAndroid.newandroidjetpackcompose.services.retrofitServices.RetrofitClient
+import com.newAndroid.newandroidjetpackcompose.services.retrofitServices.RetrofitClientConfig
 
 class ResponseData {
     suspend fun responseApi(): BaseResponse<List<ResponseDataModel>?> {

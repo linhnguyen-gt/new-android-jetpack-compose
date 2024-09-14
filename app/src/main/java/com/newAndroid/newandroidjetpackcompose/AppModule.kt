@@ -3,7 +3,7 @@ package com.newAndroid.newandroidjetpackcompose
 import android.content.Context
 import android.content.SharedPreferences
 import com.newAndroid.newandroidjetpackcompose.navigation.AppNavigator
-import com.newAndroid.newandroidjetpackcompose.services.retrofit_services.SessionManager
+import com.newAndroid.newandroidjetpackcompose.services.retrofitServices.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

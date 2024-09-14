@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import com.newAndroid.newandroidjetpackcompose.navigation.AppNavigator
 import com.newAndroid.newandroidjetpackcompose.navigation.RootNavGraph
-import com.newAndroid.newandroidjetpackcompose.services.retrofit_services.RetrofitClient
-import com.newAndroid.newandroidjetpackcompose.services.retrofit_services.SessionManager
+import com.newAndroid.newandroidjetpackcompose.services.retrofitServices.RetrofitClient
+import com.newAndroid.newandroidjetpackcompose.services.retrofitServices.SessionManager
 import com.newAndroid.newandroidjetpackcompose.ui.theme.NewAndroidJetpackComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

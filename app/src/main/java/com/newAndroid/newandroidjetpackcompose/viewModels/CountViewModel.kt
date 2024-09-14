@@ -1,4 +1,4 @@
-package com.newAndroid.newandroidjetpackcompose.view_models
+package com.newAndroid.newandroidjetpackcompose.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.newAndroid.newandroidjetpackcompose.interfaces.CountInterface
