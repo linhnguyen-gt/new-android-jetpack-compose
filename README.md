@@ -20,7 +20,7 @@ This project is a modern Android application built using Jetpack Compose, Kotlin
 ## Getting Started
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/NewAndroidJetpackCompose.git
+   git clone https://github.com/linhnguyen-gt/NewAndroidJetpackCompose.git
    ```
 2. Open the project in Android Studio.
 3. Sync the project with Gradle files.
