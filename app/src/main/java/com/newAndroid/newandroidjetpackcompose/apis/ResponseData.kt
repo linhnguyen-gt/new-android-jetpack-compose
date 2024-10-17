@@ -40,6 +40,5 @@ class ResponseData {
             ok = true,
             data = ResponseDataModel.getFromJsonList(dataMap)
         )
-
     }
 }

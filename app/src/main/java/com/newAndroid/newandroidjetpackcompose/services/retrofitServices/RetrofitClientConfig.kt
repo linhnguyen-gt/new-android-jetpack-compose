@@ -16,5 +16,4 @@ data class RetrofitClientConfig(
         fun put(body: RequestBody) = RetrofitClientConfig(RetrofitMethod.PUT, body = body)
         fun delete() = RetrofitClientConfig(RetrofitMethod.DELETE)
     }
-
 }
