@@ -5,11 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
-import com.newAndroid.newandroidjetpackcompose.navigation.AppNavigator
-import com.newAndroid.newandroidjetpackcompose.navigation.RootNavGraph
-import com.newAndroid.newandroidjetpackcompose.services.retrofitServices.RetrofitClient
-import com.newAndroid.newandroidjetpackcompose.services.retrofitServices.SessionManager
-import com.newAndroid.newandroidjetpackcompose.ui.theme.NewAndroidJetpackComposeTheme
+import com.newAndroid.newandroidjetpackcompose.data.local.SessionManager
+import com.newAndroid.newandroidjetpackcompose.data.remote.retrofit.RetrofitClient
+import com.newAndroid.newandroidjetpackcompose.presentation.navigation.AppNavigator
+import com.newAndroid.newandroidjetpackcompose.presentation.navigation.RootNavGraph
+import com.newAndroid.newandroidjetpackcompose.presentation.ui.theme.NewAndroidJetpackComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
