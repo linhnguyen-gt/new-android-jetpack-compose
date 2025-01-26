@@ -31,11 +31,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.newAndroid.newandroidjetpackcompose.data.remote.model.ResponseDataModel
 import com.newAndroid.newandroidjetpackcompose.presentation.ui.viewModels.PageTwoViewModel
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PageTwoScreen(
-    pageTwoViewModel: PageTwoViewModel = hiltViewModel(),
+    pageTwoViewModel: PageTwoViewModel = hiltViewModel()
 ) {
     val data by pageTwoViewModel.data.collectAsState()
     val error by pageTwoViewModel.error.collectAsState()

@@ -17,7 +17,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-
 object RetrofitClient {
     private const val BASE_URL = "https://datausa.io/api/"
     private const val TAG = "RetrofitClient"
@@ -53,7 +52,6 @@ object RetrofitClient {
         chain.proceed(newRequest)
     }
 
-
     /**
      * Authenticator for handling 401 Unauthorized errors and refreshing tokens.
      */
@@ -79,11 +77,8 @@ object RetrofitClient {
                         return null
                     }
                 }
-
-
             }
             return null
-
         }
     }
 
@@ -103,7 +98,6 @@ object RetrofitClient {
 
         response
     }
-
 
     /**
      * Refreshes the authentication token by making a network request.
@@ -126,12 +120,12 @@ object RetrofitClient {
         }
     }
 
-
     /**
      * Request method for performing network calls
      */
     suspend fun request(
-        endpoint: String, config: RetrofitClientConfig
+        endpoint: String,
+        config: RetrofitClientConfig
     ): BaseResponse<Map<String, Any>> {
         return try {
             val response = when (config.method) {
@@ -153,12 +147,16 @@ object RetrofitClient {
             Log.d(TAG, "Response Data: $parsedData")
 
             BaseResponse(
-                ok = response.isSuccessful, data = parsedData, statusCode = response.code()
+                ok = response.isSuccessful,
+                data = parsedData,
+                statusCode = response.code()
             )
         } catch (e: Exception) {
             Log.e(TAG, "Request error", e)
             BaseResponse(
-                ok = false, data = emptyMap(), statusCode = 500
+                ok = false,
+                data = emptyMap(),
+                statusCode = 500
             )
         }
     }
@@ -215,11 +213,10 @@ object RetrofitClient {
     fun getInstance(): RetrofitClient = this
 }
 
-
 enum class RetrofitMethod { GET, POST, PUT, DELETE }
 
-
 data class BaseResponse<T>(
-    val ok: Boolean, val data: T, val statusCode: Int? = null
+    val ok: Boolean,
+    val data: T,
+    val statusCode: Int? = null
 )
-

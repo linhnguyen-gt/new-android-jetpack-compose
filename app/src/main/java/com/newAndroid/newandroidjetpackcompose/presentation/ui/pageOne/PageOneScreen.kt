@@ -1,6 +1,5 @@
 package com.newAndroid.newandroidjetpackcompose.presentation.ui.pageOne
 
-
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,7 +24,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.newAndroid.newandroidjetpackcompose.presentation.ui.viewModels.CountViewModel
 import com.newAndroid.newandroidjetpackcompose.presentation.ui.viewModels.PageOneViewModel
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -64,4 +62,3 @@ fun PageOneScreen(
         }
     }
 }
-

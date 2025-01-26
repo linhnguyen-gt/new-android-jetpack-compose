@@ -7,15 +7,15 @@ import com.newAndroid.newandroidjetpackcompose.domain.interfaces.PageTwoInterfac
 import com.newAndroid.newandroidjetpackcompose.domain.usecase.response.GetResponseUseCase
 import com.newAndroid.newandroidjetpackcompose.presentation.navigation.AppNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class PageTwoViewModel @Inject constructor(
-    private val appNavigator: AppNavigator,
+    private val appNavigator: AppNavigator
 ) : ViewModel(), PageTwoInterface {
     private val responseData = GetResponseUseCase()
 

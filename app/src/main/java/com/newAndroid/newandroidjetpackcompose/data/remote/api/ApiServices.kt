@@ -26,3 +26,4 @@ interface ApiService {
     @DELETE
     suspend fun delete(@Url url: String): retrofit2.Response<ResponseBody>
 }
+

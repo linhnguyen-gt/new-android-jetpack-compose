@@ -26,6 +26,10 @@ This project is a modern Android application built using Jetpack Compose, Kotlin
 3. Sync the project with Gradle files.
 4. Run the app on an emulator or physical device.
 
+## To run ktlint, you can use the following Gradle commands:
+- To check your code: ./gradlew ktlintCheck
+- To format your code: ./gradlew ktlintFormat
+
 ## Project Structure
 - `app/src/main/java/com/newAndroid/newandroidjetpackcompose/`
   - `interfaces/`: Contains interface definitions

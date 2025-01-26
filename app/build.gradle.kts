@@ -5,6 +5,8 @@ plugins {
     kotlin("kapt")
     // Hilt
     id("com.google.dagger.hilt.android")
+    // Lint
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
@@ -45,8 +47,6 @@ android {
     }
 }
 
-
-
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -85,4 +85,17 @@ hilt {
 
 kapt {
     correctErrorTypes = true
+}
+// Lint
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
 }

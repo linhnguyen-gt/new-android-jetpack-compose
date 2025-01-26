@@ -4,7 +4,6 @@ import androidx.navigation.NavController
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 @Singleton
 class AppNavigator @Inject constructor() {
     private lateinit var navController: NavController
