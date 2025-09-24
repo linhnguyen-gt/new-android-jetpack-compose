@@ -6,6 +6,7 @@ import com.newAndroid.newandroidjetpackcompose.data.local.SessionManager
 import com.newAndroid.newandroidjetpackcompose.data.remote.api.ApiService
 import com.newAndroid.newandroidjetpackcompose.presentation.constants.Routes
 import com.newAndroid.newandroidjetpackcompose.presentation.navigation.AppNavigator
+import com.newAndroid.newandroidjetpackcompose.BuildConfig
 import okhttp3.Authenticator
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -19,7 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-    private const val BASE_URL = "https://datausa.io/api/"
     private const val TAG = "RetrofitClient"
 
     private lateinit var sessionManager: SessionManager
@@ -37,7 +37,7 @@ object RetrofitClient {
         .connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS).build()
 
-    private val retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
+    private val retrofit = Retrofit.Builder().baseUrl(BuildConfig.API_URL).client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create()).build()
 
     private val apiService: ApiService = retrofit.create(ApiService::class.java)

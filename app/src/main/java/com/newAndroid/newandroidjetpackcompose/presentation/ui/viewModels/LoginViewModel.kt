@@ -65,7 +65,7 @@ class LoginViewModel @Inject constructor(
                 val password = values["password"] ?: ""
 
                 if (email.isNotEmpty() && password.isNotEmpty()) {
-                    appNavigator.push(Routes.PAGE_ONE)
+                    appNavigator.replace(Routes.PAGE_ONE)
                 } else {
                     _error.value = "Invalid login credentials"
                 }
