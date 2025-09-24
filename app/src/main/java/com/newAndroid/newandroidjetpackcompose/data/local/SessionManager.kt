@@ -3,6 +3,7 @@ package com.newAndroid.newandroidjetpackcompose.data.local
 import android.content.SharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
+import androidx.core.content.edit
 
 @Singleton
 class SessionManager @Inject constructor(
@@ -11,12 +12,12 @@ class SessionManager @Inject constructor(
 
     fun clearSession() {
         // Clear all stored session data (e.g., token, user info)
-        sharedPreferences.edit().clear().apply()
+        sharedPreferences.edit { clear() }
     }
 
     fun saveToken(token: String) {
         // Save the new token in SharedPreferences
-        sharedPreferences.edit().putString("TOKEN", token).apply()
+        sharedPreferences.edit { putString("TOKEN", token) }
     }
 
     fun getToken(): String? {

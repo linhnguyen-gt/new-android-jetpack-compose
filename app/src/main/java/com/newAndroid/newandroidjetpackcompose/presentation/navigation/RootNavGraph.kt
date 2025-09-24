@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.newAndroid.newandroidjetpackcompose.presentation.constants.Routes
+import com.newAndroid.newandroidjetpackcompose.presentation.ui.login.LoginScreen
 import com.newAndroid.newandroidjetpackcompose.presentation.ui.pageOne.PageOneScreen
 import com.newAndroid.newandroidjetpackcompose.presentation.ui.pageTwo.PageTwoScreen
 
@@ -11,12 +13,15 @@ import com.newAndroid.newandroidjetpackcompose.presentation.ui.pageTwo.PageTwoSc
 fun RootNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "page_one"
+        startDestination = Routes.LOGIN
     ) {
-        composable("page_one") {
+        composable(Routes.LOGIN) {
+            LoginScreen()
+        }
+        composable(Routes.PAGE_ONE) {
             PageOneScreen()
         }
-        composable("page_two") {
+        composable(Routes.PAGE_TWO) {
             PageTwoScreen()
         }
     }

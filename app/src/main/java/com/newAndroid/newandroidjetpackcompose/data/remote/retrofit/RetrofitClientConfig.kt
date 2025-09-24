@@ -13,7 +13,9 @@ data class RetrofitClientConfig(
             RetrofitClientConfig(RetrofitMethod.GET, params)
 
         fun post(body: RequestBody) = RetrofitClientConfig(RetrofitMethod.POST, body = body)
+
         fun put(body: RequestBody) = RetrofitClientConfig(RetrofitMethod.PUT, body = body)
+
         fun delete() = RetrofitClientConfig(RetrofitMethod.DELETE)
     }
 }

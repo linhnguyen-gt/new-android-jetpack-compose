@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.newAndroid.newandroidjetpackcompose.data.local.SessionManager
 import com.newAndroid.newandroidjetpackcompose.data.remote.api.ApiService
+import com.newAndroid.newandroidjetpackcompose.presentation.constants.Routes
 import com.newAndroid.newandroidjetpackcompose.presentation.navigation.AppNavigator
 import okhttp3.Authenticator
 import okhttp3.Interceptor
@@ -70,9 +71,8 @@ object RetrofitClient {
                     }
 
                     if (isUnauthorizedMessage) {
-                        // Navigate back to the login screen and clear backstack
                         sessionManager.clearSession()
-                        appNavigator.navigateToLogin()
+                        appNavigator.replace(Routes.LOGIN)
 
                         return null
                     }

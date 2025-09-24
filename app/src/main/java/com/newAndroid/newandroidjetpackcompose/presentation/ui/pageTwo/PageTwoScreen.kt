@@ -27,7 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.newAndroid.newandroidjetpackcompose.data.remote.model.ResponseDataModel
 import com.newAndroid.newandroidjetpackcompose.presentation.ui.viewModels.PageTwoViewModel
 
@@ -46,7 +46,7 @@ fun PageTwoScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Page Two") },
+                title = { Text("Page Two - ${pageTwoViewModel.userParam?.id} ${pageTwoViewModel.userParam?.name}") },
                 navigationIcon = {
                     IconButton(onClick = { pageTwoViewModel.navigateBack() }) {
                         Icon(

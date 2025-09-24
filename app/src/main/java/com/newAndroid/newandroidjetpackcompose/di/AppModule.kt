@@ -16,21 +16,15 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideAppNavigator(): AppNavigator {
-        return AppNavigator()
-    }
+    fun provideAppNavigator(): AppNavigator = AppNavigator()
 
     @Provides
     fun provideSharedPreferences(
-        @ApplicationContext context: Context
-    ): SharedPreferences {
-        return context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-    }
+        @ApplicationContext context: Context,
+    ): SharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
     @Provides
     fun provideSessionManager(
-        sharedPreferences: SharedPreferences
-    ): SessionManager {
-        return SessionManager(sharedPreferences)
-    }
+        sharedPreferences: SharedPreferences,
+    ): SessionManager = SessionManager(sharedPreferences)
 }

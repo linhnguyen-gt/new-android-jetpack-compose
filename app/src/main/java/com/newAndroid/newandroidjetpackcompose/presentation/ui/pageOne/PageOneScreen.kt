@@ -20,7 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.newAndroid.newandroidjetpackcompose.presentation.ui.viewModels.CountViewModel
 import com.newAndroid.newandroidjetpackcompose.presentation.ui.viewModels.PageOneViewModel
@@ -35,11 +35,18 @@ fun PageOneScreen(
     val count by countViewModel.data.collectAsState()
 
     Scaffold(topBar = {
-        TopAppBar(title = { Text("Page One") }, actions = {
-            Button(onClick = { pageOneViewModel.navigateToPageTwo() }) {
-                Text("Go to Page Two")
+        TopAppBar(
+            title = { Text("Page One") },
+            actions = {
+                Button(onClick = { pageOneViewModel.navigateToPageTwo() }) {
+                    Text("Go to Page Two")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(onClick = { pageOneViewModel.logout() }) {
+                    Text("Logout")
+                }
             }
-        })
+        )
     }) { innerPadding ->
         Column(
             verticalArrangement = Arrangement.Center,
